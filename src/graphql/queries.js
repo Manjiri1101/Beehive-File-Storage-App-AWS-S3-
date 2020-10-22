@@ -7,6 +7,7 @@ export const getObject = /* GraphQL */ `
       id
       filename
       description
+      email
       createdAt
       updatedAt
     }
@@ -23,6 +24,7 @@ export const listObjects = /* GraphQL */ `
         id
         filename
         description
+        email
         createdAt
         updatedAt
       }

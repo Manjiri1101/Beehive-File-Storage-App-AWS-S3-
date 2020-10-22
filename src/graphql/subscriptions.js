@@ -7,6 +7,7 @@ export const onCreateObject = /* GraphQL */ `
       id
       filename
       description
+      email
       createdAt
       updatedAt
     }
@@ -18,6 +19,7 @@ export const onUpdateObject = /* GraphQL */ `
       id
       filename
       description
+      email
       createdAt
       updatedAt
     }
@@ -29,6 +31,7 @@ export const onDeleteObject = /* GraphQL */ `
       id
       filename
       description
+      email
       createdAt
       updatedAt
     }

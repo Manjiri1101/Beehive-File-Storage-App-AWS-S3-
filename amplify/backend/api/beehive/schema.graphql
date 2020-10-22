@@ -1,0 +1,5 @@
+type Object @model {
+  id: ID!
+  filename: String!
+  description: String
+}

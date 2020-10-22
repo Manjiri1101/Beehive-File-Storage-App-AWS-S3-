@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "beehive",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authbeehive6e98972a",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

@@ -10,6 +10,7 @@ export const getObject = /* GraphQL */ `
       email
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -27,6 +28,7 @@ export const listObjects = /* GraphQL */ `
         email
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

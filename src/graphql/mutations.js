@@ -13,6 +13,7 @@ export const createObject = /* GraphQL */ `
       email
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -28,6 +29,7 @@ export const updateObject = /* GraphQL */ `
       email
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -43,6 +45,7 @@ export const deleteObject = /* GraphQL */ `
       email
       createdAt
       updatedAt
+      owner
     }
   }
 `;

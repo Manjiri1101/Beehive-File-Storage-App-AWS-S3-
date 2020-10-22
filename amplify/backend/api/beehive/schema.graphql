@@ -1,4 +1,4 @@
-type Object @model {
+type Object @model @auth(rules: [{ allow: owner }]){
   id: ID!
   filename: String!
   description: String

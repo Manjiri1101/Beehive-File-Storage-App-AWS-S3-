@@ -12,7 +12,9 @@ Amplify.configure(awsconfig)
 
 Storage.configure({ level: 'private' });
 const initialFormState = {  description: '' }
-const someShit = {name: '', file: null}
+const emailState = {email: ''}
+
+
 var getExtension = function(url) {
   var arr = url.split("/");
   var fileArr = arr[5].split(".");
@@ -28,30 +30,39 @@ function App() {
   const [formData, setFormData] = useState(initialFormState);
   const [fileName, setFileName] = useState('');
   const [_file, set_File] = useState(null);
-  var var1 = null;
-  var var2 = null;
-/*useEffect(() => {
-  fetchObjects();
-  }, []);*/
-
+  const [userEmail, setUserEmail] = useState('');
+  async function getEmail(){
+      console.log("Getting email...")
+      Auth.currentUserInfo()
+      .then(res => {setUserEmail(res.attributes.email); console.log("Email is: " + res.attributes.email + "!");})
+      .catch(err => {
+        console.error(err);
+      });
+  }
+useEffect(() => {
+  //fetchObjects();
+  getEmail();
+  }, []);
+  
   async function onChange(e) {
     if (!e.target.files[0]) return
     var file = e.target.files[0];
     console.log("Calling from onChange(): file.name='"+ file.name +"'");
-    setFormData({ ...formData, filename: file.name});
+    setFormData({ ...formData, email: userEmail, filename: file.name});
     setFileName(file.name);
     set_File(file);
     // console.log("in onChange() var1 = " + var1 + " var2 = " + var2);
     // await Storage.put(file.name, file);
     // fetchObjects();
   }
+  
   async function fetchObjects() {
     console.log("Fetching...")
     const apiData = await API.graphql({ query: listObjects });
     const objectsFromAPI = apiData.data.listObjects.items;
     
     
-    setObjects(apiData.data.listObjects.items);
+    setObjects(objectsFromAPI);
   }
   /*
   const apiData = await API.graphql({ query: listNotes });
@@ -91,8 +102,9 @@ function App() {
       console.log("Put successfully!")
       window.alert("File Successfully Uploaded")
     }
-    setObjects([ ...objects, formData ]);
-    setFormData(initialFormState);
+    // setObjects([ ...objects, formData ]);
+    // setFormData(initialFormState);
+    fetchObjects();
   }
   async function deleteObject({ id }) {
     console.log("Calling from deleteObject(): ID: " + id);
@@ -129,18 +141,12 @@ function App() {
       
       <div style={{marginBottom: 30}}>
       {
-      /*objects.map(note => (
+      objects.map(note => (
         <div key={note.id}>
-          <h2>{note.name}</h2>
           <p>{note.description}</p>
-          <p>{note.fileName} </p>
-          <img src={note.logoType} width="20" height="20"/>
-          <a href={note.image}>Download</a>
           <button onClick={() => {deleteObject(note); deleteObj(note.fileName);}}>Delete Object</button>
-
-        
         </div>
-      ))*/
+      ))
       }
       </div>
       </header>

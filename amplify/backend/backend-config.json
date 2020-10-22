@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "beehive6e98972a": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beehive-dev-194837-authRole",
+      "UnauthRoleArn": "arn:aws:iam::767858334163:role/amplify-beehive-dev-194837-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::767858334163:role/amplify-beehive-dev-194837-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-beehive-dev-194837-deployment",
+      "UnauthRoleName": "amplify-beehive-dev-194837-unauthRole",
+      "StackName": "amplify-beehive-dev-194837",
+      "StackId": "arn:aws:cloudformation:us-east-1:767858334163:stack/amplify-beehive-dev-194837/17b04680-1411-11eb-922c-0ac2c503da11",
+      "AmplifyAppId": "d3lpmuww7nwovl"
+    },
+    "categories": {
+      "auth": {
+        "beehive6e98972a": {}
+      }
+    }
+  }
+}

@@ -40,7 +40,7 @@ function App() {
       });
   }
 useEffect(() => {
-  //fetchObjects();
+  fetchObjects();
   getEmail();
   }, []);
   
@@ -110,16 +110,22 @@ useEffect(() => {
     console.log("Calling from deleteObject(): ID: " + id);
     const newObjectsArray = objects.filter(note => note.id !== id);
     setObjects(newObjectsArray);
+   console.log("printig new obj Array",newObjectsArray )
+   const nameoffile = newObjectsArray[0].filename
+   console.log("nameoffile", nameoffile)
+   await Storage.remove(fileName)
+     .then(result => console.log(result), window.alert("File Successfully deleted"))
+     .catch(err => console.log(err));
     await API.graphql({ query: deleteObjectMutation, variables: { input: { id } }});
 
   }
 
-  async function deleteObj(name){
-    console.log("Calling from DeleteObj(): name=" + name);
-    await Storage.remove(name)
+  /*async function deleteObj(fileName){
+    console.log("Calling from DeleteObj(): name=" + fileName);
+    await Storage.remove(fileName)
      .then(result => console.log(result))
      .catch(err => console.log(err));
-  }
+  }*/
  
   return (
     <div className="App">
@@ -142,9 +148,10 @@ useEffect(() => {
       <div style={{marginBottom: 30}}>
       {
       objects.map(note => (
-        <div key={note.id}>
+        <div key={note.id }>
+          <h2>{note.name}</h2>
           <p>{note.description}</p>
-          <button onClick={() => {deleteObject(note); deleteObj(note.fileName);}}>Delete Object</button>
+          <button onClick={() => {deleteObject(note);}}>Delete Object</button>
         </div>
       ))
       }

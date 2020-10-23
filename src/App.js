@@ -4,9 +4,13 @@ import './App.css';
 import Amplify, { Auth, API, Storage } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
-
+//import {Row, Col, Jumbotron} from 'react.bootstrap'
 import { getObject, listObjects } from './graphql/queries';
 import { createObject as createObjectMutation, deleteObject as deleteObjectMutation } from './graphql/mutations';
+
+import {Button, Card, Col, Row,Modal} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './Components/navbar.js'
 
 Amplify.configure(awsconfig)
 
@@ -62,89 +66,116 @@ function App() {
 		setObjects(objectsFromAPI);
 	}
 
-
-
 	async function createObjects() {
 		//e.preventDefault();
-		console.log("Into createObjects()")
-		if (!formData.description) {
-			console.log("BYE :(");
-			return;
+
+
+		const valid = validate(formData.description, _file)
+
+		if (valid == true) {
+			await API.graphql({ query: createObjectMutation, variables: { input: formData } });
+			if (formData.filename) {
+				console.log("Calling from creatObjects(), Putting into storage...")
+				console.log("in createObjects() filename = " + fileName + " _file = " + _file);
+				await Storage.put(fileName, _file, { level: 'private' });
+				//formData.file = file;
+				console.log("Put successfully!")
+				window.alert("File Successfully Uploaded")
+			}
+
 		}
-		await API.graphql({ query: createObjectMutation, variables: { input: formData } });
-		if (formData.filename) {
-			console.log("Calling from creatObjects(), Putting into storage...")
-			console.log("in createObjects() filename = " + fileName + " _file = " + _file);
-			await Storage.put(fileName, _file, { level: 'private' });
-			//formData.file = file;
-			console.log("Put successfully!")
-			window.alert("File Successfully Uploaded")
-		}
-	
 		fetchObjects();
-	}
-	async function getLink( nameOfFile ) {
-		
-		try{
-			console.log("file name for link" + nameOfFile)
-			//const fileLink = await Storage.get(nameOfFile);
-			//console.log("link for thr object",fileLink)
-			return await Storage.get(nameOfFile);
-		}catch(err) {
-			console.log(err)
-			
-		  }
-		
+
 	}
 
+	function validate(description, file) {
+		if (!description) {
+			window.alert(" Write description");
+			return false;
 
-	async function deleteObject(id, nameoffile ) {
+		};
+		if (file.size / 1024 / 1024 > 10) {
+			window.alert("File size is too big, please upload the file size less than 10 MB ")
+			return false;
+		}
+		return true;
+	}
+
+	async function deleteObject(id, nameoffile) {
 		console.log("Calling from deleteObject(): ID: " + id + " " + nameoffile);
-		
+
 		const newObjectsArray = objects.filter(note => note.id !== id);
 		setObjects(newObjectsArray); console.log("printing new obj Array", newObjectsArray)
-		
+
 		await Storage.remove(nameoffile)
 			.then(result => console.log(result), window.alert("File Successfully deleted"))
 			.catch(err => console.log(err));
 		await API.graphql({ query: deleteObjectMutation, variables: { input: { id } } });
 
 	}
+	
+	
+	/*async function getLink(nameOfFile) {
 
+		try {
+			console.log("file name for link " + nameOfFile + 'type of operator  '+ typeof(nameOfFile))
+			//const fileLink = await Storage.get(nameOfFile);
+			//console.log("link for thr object",fileLink)
+			const URL = await Storage.get(nameOfFile);
+
+			console.log("url  " +URL)
+			return URL;
+		} catch (err) {
+			console.log(err)
+
+		}
+	} 
+*/
+	function getlink()
+	{
+		var fname= fileName
+		console.log("print from get link  ", fileName)
+
+	}
 	return (
-		<div className="App">
-
-			<header className="App-header">
-				<AmplifySignOut />
-				<h2>Beehive</h2>
-
-				<input
-					onChange={e => setFormData({ ...formData, 'description': e.target.value })}
-					placeholder="File description"
-					value={formData.description}
-				/>
+		<div className="bg">
+			
+            <nav> <NavBar  className="App-header"/> </nav>   
+			<div className='container'>
+					
 				<input
 					type="file"
 					onChange={onChange}
+					className='form-control'
 				/>
-				<button onClick={createObjects}>Upload Image</button>
+				<br></br>
+				<input 
+					onChange={e => setFormData({ ...formData, 'description': e.target.value })}
+					placeholder="File description"
+					
+					className="form-control form-control-lg"
+					value={formData.description}
+				/>
+				<br></br>
 
-				<div style={{ marginBottom: 30 }}>
+				<button className='btn btn-lg btn-info' onClick={createObjects}>Upload Image</button>
+			</div>
+			<div className='container'>
+				<div >
 					{
 						objects.map(file => (
 							<div key={file.id || file.filename}>
 								<i><h2>{file.filename}</h2></i>
 								<p>{file.description}</p>
 								<button onClick={() => { deleteObject(file.id, file.filename); }}>Delete Object</button>
-								<button onClick={() => { Storage.get(file.filename) }}>Get Link!</button>
+								<button onClick={()=>{getlink()}}> click mee</button>
 								
-								<a href={getLink(file.filename)} > link </a>
 							</div>
 						))
 					}
 				</div>
-			</header>
-		</div>
+				</div>
+			</div>
 	);
 
 }

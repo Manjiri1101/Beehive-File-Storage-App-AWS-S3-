@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+.hexagon {
+  width: 100px;
+  height: 55px;
+  position: relative;
+  background-color:#e5f50e
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +41,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg {
+  background-color: #282c34;
+
+  display: flex;
+  flex-direction: column;
+  
+  
+  font-size: calc(10px + 2vmin);
+  color: white;
 }

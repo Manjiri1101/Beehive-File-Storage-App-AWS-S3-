@@ -1,0 +1,11 @@
+.brand-name{
+    font-weight: bold;
+    color: white;
+    padding: 10px 8px 10px 8px;
+}
+
+.brand-logo {
+    background-image: url("https://i.pinimg.com/564x/46/52/d2/4652d248036ef0f730534ecf2ed4c4fc.jpg"); 
+    width: 1.5em;
+    height: 1.5em;
+}

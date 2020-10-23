@@ -5,8 +5,10 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.24",
     "aws-amplify": "^3.3.4",
+    "bootstrap": "^4.5.3",
     "cra-template": "1.0.3",
     "react": "^17.0.0",
+    "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.0",
     "react-scripts": "3.4.4"
   },

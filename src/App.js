@@ -18,6 +18,7 @@ Amplify.configure(awsconfig)
 Storage.configure({ level: 'private' });
 const initialFormState = { description: '' }
 const emailState = { email: '' }
+const updateInfo = { id: '', description: '' }
 
 
 var getExtension = function (url) {
@@ -37,6 +38,7 @@ function App() {
 	const [_file, set_File] = useState(null);
 	const [userEmail, setUserEmail] = useState('');
 	const [downloadlink, setdownloadlink] = useState('');
+	const [updatedInfo, setUpdatedInfo] = useState(updateInfo);
 	async function getEmail() {
 		console.log("Getting email...")
 		Auth.currentUserInfo()
@@ -120,19 +122,19 @@ function App() {
 	async function getLink(scooby) {
 
 		try {
-			console.log("file name for link " + scooby + 'type of operator  '+ typeof(scooby))
+			console.log("file name for link " + scooby + 'type of operator  ' + typeof (scooby))
 			//const fileLink = await Storage.get(nameOfFile);
 			//console.log("link for thr object",fileLink)
 			const URL = await Storage.get(scooby);
 
-			console.log("url  " +URL)
+			console.log("url  " + URL)
 			setdownloadlink(URL)
 			//return URL;
 		} catch (err) {
 			console.log(err)
 
 		}
-	} 
+	}
 	function showLink(filename, id) {
 		var mylink = getLink(filename);
 		document.getElementById(id).innerHTML = mylink;
@@ -143,24 +145,26 @@ function App() {
 
 
 	} */
-	async function update(id) {
+	async function update() {
 
-		try{
+		try {
+                   console.log("updated info:" + updatedInfo);
 
-		
-		const updated= await API.graphql({ query: updateObjectMutation, variables: { input: id } });
+			const updated = await API.graphql({ query: updateObjectMutation, variables: { input: updatedInfo } });
+			console.log("print updated  ", updated)
 		}
-		catch(error) {	
+		catch (error) {
 		}
 		fetchObjects();
 
 	}
 	return (
-		
-		
+
+
 		<div className="bg">
 
 			<nav> <NavBar className="App-header" /> </nav>
+			<h1>Welcome to Beehive (email adderess goes here)</h1>
 			<div className='container'>
 
 				<input
@@ -188,33 +192,50 @@ function App() {
 								<i><h2>{file.filename}</h2></i>
 								<p>{file.description}</p>
 								<button onClick={() => { deleteObject(file.id, file.filename); }}>Delete Object</button>
-								<button onClick={() => { getLink(file.filename)}}> Generate Download link</button>
-								<button type="button" data-toggle="collapse" data-target={"#".concat(file.id)}>Update</button>
-								<a href={downloadlink} class="button">Download</a>
-								
-								<div id={file.id} className="collapse">	
-									<div>
-										<h4 className="modal-title">Update Description for {file.filename}</h4>
-									</div>
-									<div>
-										<input type='text' className='form-control form-control-lg' placeholder='Enter updated info here'/>
-									</div>
-									<div>
-										<button type="button" className="btn btn-default">Close</button>
-									</div>
-								</div>
+								<button onClick={() => { getLink(file.filename) }}> Generate</button>
+								<br />
+								<input
+								id={file.id}
+									onChange={e => setUpdatedInfo({ ...updatedInfo, 'description': e.target.value, 'id': file.id })}
+									placeholder="Update file description"
+									type="text"
+									className="form-control form-control-lg"
+									value={updatedInfo.description}
+								/>
 
-								<input id="addSubmit" type="submit" value="Add"></input>
+								<button className='btn btn-lg btn-info' onClick={update}>Update file</button>
+								
+								<button className='btn btn-lg btn-info' ><a href={downloadlink} className="btn">Download</a></button>
+
+								
+								
 							</div>
 						))
 					}
 				</div>
 			</div>
 		</div>
-	
+
 	);
 
 }
 export default withAuthenticator(App);
 //<button><a  href={downloadlink}> Link</a></button>
 //								<a href={downloadlink}>Download</a>
+/*
+
++++++++++++=
+<button type="button" data-toggle="collapse" data-target={"#".concat(file.id)}>Update</button>
+<div id={file.id} className="collapse">
+									<div>
+										<h4 className="modal-title">Update Description for {file.filename}</h4>
+									</div>
+									<div>
+										<input type='text' className='form-control form-control-lg' placeholder='Enter updated info here' />
+									</div>
+									<div>
+										<button type="button" className="btn btn-default">Close</button>
+									</div>
+								</div>
+								<input id="addSubmit" type="submit" value="Add"></input>
+*/

@@ -6,10 +6,11 @@ import awsconfig from './aws-exports';
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 //import {Row, Col, Jumbotron} from 'react.bootstrap'
 import { getObject, listObjects } from './graphql/queries';
-import { createObject as createObjectMutation, deleteObject as deleteObjectMutation } from './graphql/mutations';
-
-import {Button, Card, Col, Row,Modal} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { createObject as createObjectMutation, deleteObject as deleteObjectMutation, updateObject as updateObjectMutation } from './graphql/mutations';
+import "jquery/dist/jquery.min.js";
+import "bootstrap/dist/js/bootstrap.min.js";
+import { Button, Card, Col, Row, Modal } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import NavBar from './Components/navbar.js'
 
 Amplify.configure(awsconfig)
@@ -35,6 +36,7 @@ function App() {
 	const [fileName, setFileName] = useState('');
 	const [_file, set_File] = useState(null);
 	const [userEmail, setUserEmail] = useState('');
+	const [downloadlink, setdownloadlink] = useState('');
 	async function getEmail() {
 		console.log("Getting email...")
 		Auth.currentUserInfo()
@@ -113,46 +115,64 @@ function App() {
 		await API.graphql({ query: deleteObjectMutation, variables: { input: { id } } });
 
 	}
-	
-	
-	/*async function getLink(nameOfFile) {
+
+
+	async function getLink(scooby) {
 
 		try {
-			console.log("file name for link " + nameOfFile + 'type of operator  '+ typeof(nameOfFile))
+			console.log("file name for link " + scooby + 'type of operator  '+ typeof(scooby))
 			//const fileLink = await Storage.get(nameOfFile);
 			//console.log("link for thr object",fileLink)
-			const URL = await Storage.get(nameOfFile);
+			const URL = await Storage.get(scooby);
 
 			console.log("url  " +URL)
-			return URL;
+			setdownloadlink(URL)
+			//return URL;
 		} catch (err) {
 			console.log(err)
 
 		}
 	} 
-*/
-	function getlink()
-	{
-		var fname= fileName
-		console.log("print from get link  ", fileName)
+	function showLink(filename, id) {
+		var mylink = getLink(filename);
+		document.getElementById(id).innerHTML = mylink;
+	}
+	/*function getlink() {
+		var fname = fileName
+		console.log("print from get link  ", fileName) 
+
+
+	} */
+	async function update(id) {
+
+		try{
+
+		
+		const updated= await API.graphql({ query: updateObjectMutation, variables: { input: id } });
+		}
+		catch(error) {	
+		}
+		fetchObjects();
 
 	}
 	return (
+		
+		
 		<div className="bg">
-			
-            <nav> <NavBar  className="App-header"/> </nav>   
+
+			<nav> <NavBar className="App-header" /> </nav>
 			<div className='container'>
-					
+
 				<input
 					type="file"
 					onChange={onChange}
 					className='form-control'
 				/>
 				<br></br>
-				<input 
+				<input
 					onChange={e => setFormData({ ...formData, 'description': e.target.value })}
 					placeholder="File description"
-					
+
 					className="form-control form-control-lg"
 					value={formData.description}
 				/>
@@ -168,15 +188,33 @@ function App() {
 								<i><h2>{file.filename}</h2></i>
 								<p>{file.description}</p>
 								<button onClick={() => { deleteObject(file.id, file.filename); }}>Delete Object</button>
-								<button onClick={()=>{getlink()}}> click mee</button>
+								<button onClick={() => { getLink(file.filename)}}> Generate Download link</button>
+								<button type="button" data-toggle="collapse" data-target={"#".concat(file.id)}>Update</button>
+								<a href={downloadlink} class="button">Download</a>
 								
+								<div id={file.id} className="collapse">	
+									<div>
+										<h4 className="modal-title">Update Description for {file.filename}</h4>
+									</div>
+									<div>
+										<input type='text' className='form-control form-control-lg' placeholder='Enter updated info here'/>
+									</div>
+									<div>
+										<button type="button" className="btn btn-default">Close</button>
+									</div>
+								</div>
+
+								<input id="addSubmit" type="submit" value="Add"></input>
 							</div>
 						))
 					}
 				</div>
-				</div>
 			</div>
+		</div>
+	
 	);
 
 }
 export default withAuthenticator(App);
+//<button><a  href={downloadlink}> Link</a></button>
+//								<a href={downloadlink}>Download</a>

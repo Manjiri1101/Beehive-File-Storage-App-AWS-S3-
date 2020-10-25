@@ -175,11 +175,11 @@ function App() {
 				<center>
 					<h1>
 						{" "}
-						<CgBee />
+						
             Welcome Bee
-            <CgBee />{" "}
+            {" "}
 					</h1>
-					<p>{userEmail}</p>
+	<p><CgBee /> {" "}{userEmail}</p>
 					<p> {userEmail==="manjiri1994@outlook.com"? 'Admin':''}</p>
 					
 
@@ -259,6 +259,7 @@ function App() {
 									</button>
 									<a id={'link_'.concat(file.id)} href={downloadlink}></a>
 								</div>
+										<p class="small">Time Created(PST) : {file.createdAt}</p>
 								<p id="datebtn" class="small">
 									Time Updated(PST) : {file.updatedAt}
 								</p>

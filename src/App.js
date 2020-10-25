@@ -241,26 +241,17 @@ function App() {
 									id="clear"
 								/>
 								<div className="btn-toolbar">
-									<button
-										id="clear"
-										onClick="reset();"
-										className="btn btn-warning"
-										onClick={update}
-									>
+									<button id="clear"	onClick="reset();" className="btn btn-warning" onClick={update}>
 										<HiPencil />
 									</button>
-
 									<button
 										className="btn btn-warning"
 										onClick={() => {
-											deleteObject(file.id, file.filename);
-										}}
-									>
+											deleteObject(file.id, file.filename);}}>
 										<HiTrash />
 									</button>
 									<button className="btn btn-warning" onClick={() => {getLink(file.filename, file.id)}}>
-										
-											<HiDownload color="black" />
+										<HiDownload color="black" />
 										
 									</button>
 									<a id={'link_'.concat(file.id)} href={downloadlink}></a>

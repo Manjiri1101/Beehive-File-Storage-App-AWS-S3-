@@ -176,10 +176,13 @@ function App() {
 					<h1>
 						{" "}
 						<CgBee />
-            Welcome to Beehive
+            Welcome Bee
             <CgBee />{" "}
 					</h1>
 					<p>{userEmail}</p>
+					<p> {userEmail==="manjiri1994@outlook.com"? 'Admin':''}</p>
+					
+
 				</center>
 			</div>
 			<div className="container form-inline">
@@ -223,7 +226,7 @@ function App() {
 									<h2>Filename: {file.filename}</h2>
 								</i>
 								<p>Description: {file.description}</p>
-								<p className="small">Uploaded by: {userEmail}</p>
+								<p className="small">Uploaded by: {file.email}</p>
 
 								<br />
 								<input
@@ -271,3 +274,14 @@ function App() {
 	);
 }
 export default withAuthenticator(App);
+
+
+
+/*
+					<if condition={{userEmail}==="manjiri1994@outlook.com"}>
+						<then> <p>" Admin "</p></then>
+						</if>
+						<else>
+						<p>{userEmail}</p>
+						</else>
+*/

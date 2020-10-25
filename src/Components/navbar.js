@@ -3,18 +3,18 @@ import './navbar.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import React, { Component } from 'react'
 import { navBar } from 'aws-amplify';
-
+import {GiTreeBeehive} from "react-icons/gi";
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 
 function NavBar(props) {
     return (
-        <Navbar collapseOnSelect='true' expand="lg" bg="dark" variant="dark" className="mr-auto">
+        <Navbar collapseOnSelect='true' expand="lg" bg="dark" variant="dark" className="mr-auto ">
             <Navbar.Brand href="#home">
-                <div className='brand-name'>Beehive</div>
-                <div className='brand-logo'></div>
+                <div className='brand-name ' ><i>Beehive</i> <GiTreeBeehive/></div>
+                
             </Navbar.Brand>
             <Navbar.Brand > 
-                < AmplifySignOut />
+                < AmplifySignOut className="float-right"/>
             </Navbar.Brand>
             
         </Navbar>

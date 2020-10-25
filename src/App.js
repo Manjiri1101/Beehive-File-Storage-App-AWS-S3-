@@ -133,7 +133,7 @@ function App() {
 		});
 	}
 
-	async function getLink(scooby) {
+	async function getLink(scooby, scoobyid) {
 		try {
 			console.log(
 				"file name for link " + scooby + "type of operator  " + typeof scooby
@@ -141,6 +141,8 @@ function App() {
 			const URL = await Storage.get(scooby);
 			console.log("url  " + URL);
 			setdownloadlink(URL);
+			document.getElementById('link_'.concat(scoobyid)).innerHTML = 'Download!';
+			document.getElementById('link_'.concat(scoobyid)).setAttribute('href', URL);
 		} catch (err) {
 			console.log(err);
 		}
@@ -188,7 +190,7 @@ function App() {
 					className="btn btn-warning"
 				></input>
 
-				<br></br>
+				<br/>
 
 				<input
 					onChange={(e) =>
@@ -200,7 +202,7 @@ function App() {
 					className="form-control form-control-lg"
 					value={formData.description}
 				/>
-				<br></br>
+				<br/>
 
 				<button
 					className="btn btn-warning"
@@ -256,11 +258,12 @@ function App() {
 									>
 										<HiTrash />
 									</button>
-									<button className="btn btn-warning">
-										<a href={downloadlink}>
+									<button className="btn btn-warning" onClick={() => {getLink(file.filename, file.id)}}>
+										
 											<HiDownload color="black" />
-										</a>
+										
 									</button>
+									<a id={'link_'.concat(file.id)} href={downloadlink}></a>
 								</div>
 								<p id="datebtn" class="small">
 									Time Updated(PST) : {file.updatedAt}
@@ -271,7 +274,7 @@ function App() {
 					))}
 				</div>
 
-				<br></br>
+				<br/>
 			</div>
 		</div>
 	);

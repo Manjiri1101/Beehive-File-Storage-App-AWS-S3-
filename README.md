@@ -20,6 +20,16 @@ I have made this application serverless, deployed it on AWS Amplify, using githu
 It leverages various technologies like – Route 53 for personalized domain name, S3- CloudFront, Lambda function, Cloudwatch, SNS.
 I have created the backend architecture very powerful so as to it will be  highly available.(All DR measures are taken care of).
 
+User Sign in:
+
+<img src="signin.png" />
+
+Webpage - When user is logged in:
+
+<img src="user.png" />
+
+Webpage - Admin page:
+
 
 
 

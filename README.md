@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
-## Introduction: Beehive - It is a web application to save the files on S3 bucket.
+## Project Name:  Beehive (It is a web application to save the files on S3 bucket.)
 ### Project 1- CMPE 281
 #### Created By: Manjiri Kadam
 

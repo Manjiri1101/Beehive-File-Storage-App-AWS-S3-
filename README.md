@@ -20,16 +20,22 @@ I have made this application serverless, deployed it on AWS Amplify, using githu
 It leverages various technologies like – Route 53 for personalized domain name, S3- CloudFront, Lambda function, Cloudwatch, SNS.
 I have created the backend architecture very powerful so as to it will be  highly available.(All DR measures are taken care of).
 
-User Sign in:
+Attached some snippets from my webapp:
+
+#### User Sign in:
 
 <img src="signin.png" />
+User can signup to my webapp here. I have used AWS Cognito for the authentication.
 
-Webpage - When user is logged in:
+#### Webpage - When user is logged in:
 
 <img src="user.png" />
+User can see his/her email address on top of the application. He/she can upload the files, see the uploaded files, download and delete the files. Also, user can edit the decription of file.
 
-Webpage - Admin page:
+#### Webpage - Admin page:
 
+<img src="adminpg.png" />
+Admin can access other users files.
 
 
 

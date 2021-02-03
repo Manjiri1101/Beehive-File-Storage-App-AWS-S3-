@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
-## Project Name:  Beehive (It is a web application to save the files on S3 bucket.)
+## Project Name:  Beehive (Cloud File Storage using S3 bucket.)
 ### Project 1- CMPE 281
 #### Created By: Manjiri Kadam
 
@@ -13,11 +13,13 @@ To Create a highly available, highly scalable, cost effective 3 tier web applica
 ## Introduction:
 
 Beehive is a webapp, which is hosted on AWS Amplify has a serverless architecture which is highly scalable and highly available. I have written the code in JavaScript, HTML, and CSS using React.js framework. Written code using VScode, tracked my journey on Github.
-In this app, user can login via user authentication, I used AWS Cognito for this. When user gets entered in the app, he/she will be able to upload, download the files which are smaller 10MB. It provides secured way of storing the files in S3 bucket. I have used DynamoDB to store metadata of file upload.
+In this app, user can login via user authentication, I used AWS Cognito for this. When user gets entered in the app, he/she will be able to upload, download the files which are smaller than 10MB. 
+It provides secured way of storing the files in S3 bucket. I have used DynamoDB to store metadata of file upload.
 I have covered all the basic functionality which is mentioned in project objective. I have implemented CRUD operation to call API’s to access S3 storage. User will be able to save their files using this app, they can download them, modify the description of file also cam delete them.
-I have displayed user’s information on top of the app. The app records the time file got uploaded, and updated. I have created “Admin” page to monitor all users data. 
+I have displayed user’s information on top of the app. The app records the time file got uploaded, and updated. 
+I have created “Admin” page to monitor all users data. 
 I have made this application serverless, deployed it on AWS Amplify, using github for deployment. 
-It leverages various technologies like – Route 53 for personalized domain name, S3- CloudFront, Lambda function, Cloudwatch, SNS.
+It leverages various technologies like – Route 53 for personalized domain name, S3- CloudFront, Cloudwatch, SNS (Simple Notification Service).
 I have created the backend architecture very powerful so as to it will be  highly available.(All DR measures are taken care of).
 
 Attached some snippets from my webapp:
